@@ -16,6 +16,13 @@ pub struct Chain {
     pub supports_trace_block: bool,
 }
 
+pub const GANCHAIN: Chain = Chain {
+    id: 4048,
+    name: "GANchain L1",
+    supports_blocks_receipts: true,
+    supports_trace_block: true,
+};
+
 pub const ETHEREUM: Chain = Chain {
     id: 1,
     name: "ethereum",
@@ -44,7 +51,7 @@ pub const MONAD_DEVNET: Chain = Chain {
     supports_trace_block: false,
 };
 
-pub static CHAINS: [Chain; 4] = [ETHEREUM, POLYGON, BSC, MONAD_DEVNET];
+pub static CHAINS: [Chain; 5] = [GANCHAIN, ETHEREUM, POLYGON, BSC, MONAD_DEVNET];
 
 pub fn get_chains() -> HashMap<u64, Chain> {
     let mut chains: HashMap<u64, Chain> = HashMap::new();
