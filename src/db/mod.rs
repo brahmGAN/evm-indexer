@@ -80,7 +80,9 @@ impl Database {
             .with_url(db_host)
             .with_user(db_username)
             .with_password(db_password)
-            .with_database(db_name);
+            .with_database(db_name)
+            .with_option("secure", "1")
+            .with_option("compress", "1");
 
         Self { chain, db }
     }
