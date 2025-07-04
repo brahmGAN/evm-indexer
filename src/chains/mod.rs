@@ -19,8 +19,8 @@ pub struct Chain {
 pub const GANCHAIN: Chain = Chain {
     id: 4048,
     name: "GANchain L1",
-    supports_blocks_receipts: true,
-    supports_trace_block: true,
+    supports_blocks_receipts: false,
+    supports_trace_block: false,
 };
 
 pub const ETHEREUM: Chain = Chain {
