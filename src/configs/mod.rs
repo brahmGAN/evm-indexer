@@ -82,38 +82,30 @@ impl Default for Config {
 impl Config {
     pub fn new() -> Self {
         let args = IndexerArgs::parse();
-
         let chain = get_chain(args.chain as u64);
-
         let rpcs: Vec<String> =
             args.rpcs.split(',').map(|rpc| rpc.to_string()).collect();
-
         let ws_url: Option<String> =
             if args.ws.is_empty() { None } else { Some(args.ws) };
-
         let url = Url::parse(&args.database).expect("unable to parse database url expected: scheme://username:password@host/database");
-
         let username = url.username();
-
         let password =
             url.password().expect("no password provided for database");
-
+        // FIXED: Properly reconstruct the URL with port
         let db_host = if let Some(port) = url.port() {
             format!("{}://{}:{}", url.scheme(), url.host().unwrap(), port)
         } else {
             format!("{}://{}", url.scheme(), url.host().unwrap())
         };
-
+        
         let url_paths =
             url.path_segments().map(|c| c.collect::<Vec<_>>()).unwrap();
-
         let db_name =
             url_paths.first().expect("no database name provided on path");
-
         Self {
             batch_size: args.batch_size,
             chain,
-            db_host: format!("{}://{}", url.scheme(), db_host),
+            db_host,
             db_name: db_name.to_string(),
             db_password: password.to_string(),
             db_username: username.to_string(),
