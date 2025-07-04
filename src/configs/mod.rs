@@ -98,8 +98,11 @@ impl Config {
         let password =
             url.password().expect("no password provided for database");
 
-        let db_host =
-            url.host().expect("no host provided for database").to_string();
+        let db_host = if let Some(port) = url.port() {
+            format!("{}://{}:{}", url.scheme(), db_host_name, port)
+        } else {
+            format!("{}://{}", url.scheme(), db_host_name)
+        };
 
         let url_paths =
             url.path_segments().map(|c| c.collect::<Vec<_>>()).unwrap();
