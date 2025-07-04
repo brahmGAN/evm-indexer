@@ -99,9 +99,9 @@ impl Config {
             url.password().expect("no password provided for database");
 
         let db_host = if let Some(port) = url.port() {
-            format!("{}://{}:{}", url.scheme(), db_host_name, port)
+            format!("{}://{}:{}", url.scheme(), url.host().unwrap(), port)
         } else {
-            format!("{}://{}", url.scheme(), db_host_name)
+            format!("{}://{}", url.scheme(), url.host().unwrap())
         };
 
         let url_paths =
